@@ -1,0 +1,58 @@
+{
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash(*production*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'No tocar producción desde Claude Code' && exit 2"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const f=JSON.parse(d).tool_input?.file_path;if(f&&f.includes('backend')&&f.endsWith('.ts'))require('child_process').spawnSync('npx',['prettier','--write',f],{stdio:'inherit'})})\" 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$(date -u +%FT%TZ) | $CLAUDE_TOOL | $CLAUDE_FILE | $CLAUDE_USER\" >> .claude/audit.log",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '{\"systemMessage\":\"Branch: %s\\nLast commit: %s\"}' \"$(git branch --show-current)\" \"$(git log -1 --oneline)\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "scripts/validate-against-spec.sh $CLAUDE_LAST_OPENSPEC_CHANGE"
+          }
+        ]
+      }
+    ]
+  }
+}
