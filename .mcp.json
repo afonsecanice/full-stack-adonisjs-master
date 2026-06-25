@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "D:\\LIDR\\Modulo3\\full-stack-adonisjs-master"
+      ]
+    }
+  }
+}

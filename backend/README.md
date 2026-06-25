@@ -11,14 +11,14 @@ API JSON con autenticación por access tokens.
 
 ## Scripts
 
-| Script | Acción |
-|---|---|
-| `npm run dev` | Servidor con HMR (`:3333`) |
-| `npm run migration:run` | Aplica migraciones pendientes |
-| `npm run migration:fresh` | Recrea la BD desde cero |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run test` | Suite de tests (Japa) |
-| `node ace list:routes` | Inspecciona las rutas |
+| Script                    | Acción                        |
+| ------------------------- | ----------------------------- |
+| `npm run dev`             | Servidor con HMR (`:3333`)    |
+| `npm run migration:run`   | Aplica migraciones pendientes |
+| `npm run migration:fresh` | Recrea la BD desde cero       |
+| `npm run typecheck`       | `tsc --noEmit`                |
+| `npm run test`            | Suite de tests (Japa)         |
+| `node ace list:routes`    | Inspecciona las rutas         |
 
 ## Estructura
 
